@@ -1,8 +1,10 @@
+import { NextResponse } from "next/server"
 export async function GET (req){
-    const params = new URL (req.url)
-    const mode =params.get("hub.mode")
-    const challenge =params.get("hub.challenge")
-    const token =params.get("hub.verify_token")
+    const {searchParams} = new URL (req.url)
+    console.log(req)
+    const mode =searchParams.get("hub.mode")
+    const challenge =searchParams.get("hub.challenge")
+    const token =searchParams.get("hub.verify_token")
     const VERIFY_TOKEN = process.env.META_VERIFY_TOKEN
 
   if (mode === 'subscribe' && token === VERIFY_TOKEN) {
