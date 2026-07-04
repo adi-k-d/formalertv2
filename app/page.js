@@ -14,7 +14,7 @@ export default function Home (){
   useEffect(()=>{
   window.fbAsyncInit = function() {
     FB.init({
-      appId      : '1711287526569597',
+      appId      : process.env.META_APP_ID,
       cookie     : true,
       xfbml      : true,
       version    : 'v25.0'
@@ -45,19 +45,18 @@ export default function Home (){
     }
 
     window.FB.login(
-      function(response){
-        if (response.authResponse) { 
-          // This gives you an access token for the logged-in Facebook user. // For Embedded Signup, Meta also sends a message event to the window. 
-           } 
-        else { 
-          console.log('User cancelled login or did not authorize.') 
-        }}
-
-    )
-
-  //   const res = await fetch("/api/sign-up")
-  // console.log(res)
-  // return res.json()
+      function (response) {
+        console.log('FB login response:', response)
+      },
+      {
+        config_id: process.env.META_CONFIG_ID,
+        response_type: 'code',
+        override_default_response_type: true,
+        extras: {
+          setup: {},
+          sessionInfoVersion: '3',
+        },
+      })
   }
   return  <><main className="min-h-screen flex items-center justify-center bg-gray-100 px-4"> 
   <div className="w-full max-w-md rounded-2xl bg-white p-8 shadow-lg">
